@@ -7,10 +7,12 @@
 
 	<typeAliases>
 		<typeAlias type="com.lsg.member.vo.MemberVO" alias="MemberVO"/>
+		<typeAlias type="com.lsg.community.vo.CommunityVO" alias="CommunityVO"/>
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="com/lsg/member/dao/sql/memberDao.xml"/>
+		<mapper resource="com/lsg/community/dao/sql/communityDao.xml"/>
 	</mappers>
 	
 </configuration>

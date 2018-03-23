@@ -11,6 +11,7 @@
 		<config>src/main/webapp/WEB-INF/spring/controllerContext.xml</config>
 		<config>src/main/webapp/WEB-INF/spring/rootContext.xml</config>
 		<config>src/main/webapp/WEB-INF/spring/memberContext.xml</config>
+		<config>src/main/webapp/WEB-INF/spring/communityContext.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>

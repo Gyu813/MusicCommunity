@@ -1,7 +1,5 @@
 package com.lsg.community.vo;
 
-import java.util.List;
-
 import org.springframework.web.multipart.MultipartFile;
 
 import com.lsg.member.vo.MemberVO;
@@ -9,7 +7,7 @@ import com.lsg.member.vo.MemberVO;
 public class CommunityVO {
 
 	private int no;
-	private int userNo;
+	private int memberNo;
 	private String title;
 	private String body;
 	private String writeDate;
@@ -18,7 +16,6 @@ public class CommunityVO {
 	private String requestIp;
 	private MultipartFile file;
 	private String displayFilename;
-	private List<CommentVO> commentList;
 	private MemberVO memberVO;
 
 	public int getNo() {
@@ -30,11 +27,11 @@ public class CommunityVO {
 	}
 
 	public int getUserNo() {
-		return userNo;
+		return memberNo;
 	}
 
-	public void setUserNo(int userNo) {
-		this.userNo = userNo;
+	public void setUserNo(int memberNo) {
+		this.memberNo = memberNo;
 	}
 
 	public String getTitle() {
@@ -101,20 +98,18 @@ public class CommunityVO {
 		this.displayFilename = displayFilename;
 	}
 
-	public List<CommentVO> getCommentList() {
-		return commentList;
-	}
-
-	public void setCommentList(List<CommentVO> commentList) {
-		this.commentList = commentList;
-	}
-
 	public MemberVO getMemberVO() {
 		return memberVO;
 	}
 
 	public void setMemberVO(MemberVO memberVO) {
 		this.memberVO = memberVO;
+	}
+	
+	public String save() {
+		
+		
+		return null;
 	}
 
 }

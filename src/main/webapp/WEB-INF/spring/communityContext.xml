@@ -3,14 +3,14 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<bean	id="communityController"
-			class="com.lsg.community.web.CommunityController">
-		<property name="communityService" ref="communityService"/>
+	<bean	id="communityDao"
+			class="com.lsg.community.dao.CommunityDaoImplForOracle">
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>	
 	</bean>
 	
-	<bean	id="memberController"
-			class="com.lsg.member.web.MemberController">
-		<property name="memberService" ref="memberService"/>
+	<bean	id="communityService"
+			class="com.lsg.community.service.CommunityServiceImpl">
+		<property name="communityDao" ref="communityDao"/>		
 	</bean>
 
 </beans>

@@ -11,20 +11,29 @@
 		type="text/javascript"></script>
 <script type="text/javascript">
 	$().ready(function() {
-		
+		$("#writeBtn").click(function() {
+			$("#writeForm").attr({
+				"method": "post",
+				"action": "<c:url value="/write"/>"
+			}).submit();
+		});
 	});
 </script>
 </head>
 <body>
 	<div>
 		<jsp:include page="/WEB-INF/view/template/menu.jsp"/>
-		<form:form modelAttribute="writeForm">
+		<form:form modelAttribute="writeForm" enctype="multipart/form-data">
 			<div>
 				제목 : <input type="text" id="title" name="title" placeholder="제목을 입력하세요."/>
 			</div>
 			
 			<div>
 				내용 : <textarea rows="10" cols="30" id="body" name="body" placeholder="내용을 입력하세요."></textarea>
+			</div>
+			
+			<div>
+				<input type="file" id="file" name="file"/>
 			</div>
 			
 			<div>

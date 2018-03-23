@@ -53,5 +53,4 @@
 						expression="execution(public * com.lsg..service.*ServiceImpl.*(..))"/>
 		<aop:advisor	advice-ref="rollbackRule" pointcut-ref="pointCut"/>
 	</aop:config>
-	
 </beans>

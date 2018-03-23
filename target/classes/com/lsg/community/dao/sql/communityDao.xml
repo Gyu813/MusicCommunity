@@ -6,4 +6,83 @@
 <!-- namespace에는 인터페이스이름 -->
 <mapper namespace="CommunityDao">
 
+	<resultMap type="CommunityVO" id="CommunityVOMap">
+		<id column="NO" property="no"/>
+		<result column="MEMBER_NO" property="memberNo"/>
+		<result column="BODY" property="body"/>
+		<result column="WRITE_DATE" property="writeDate"/>
+		<result column="VIEW_COUNT" property="viewCount"/>
+		<result column="RECOMMEND_COUNT" property="recommendCount"/>
+		<result column="REQUEST_IP" property="requestIp"/>
+		<result column="DISPLAY_FILE_NAME" property="displayFilename"/>
+		
+		<association property="memberVO" javaType="MemberVO">
+			<id column="M_NO" property="no"/>
+			<result column="ID" property="id"/>
+			<result column="NICKNAME" property="nickname"/>
+			<result column="REGIST_DATE" property="registDate"/>
+		</association>
+	</resultMap>
+
+	<select id="selectAllCommunities" resultMap="CommunityVOMap">
+		SELECT	C.NO
+				, C.MEMBER_NO
+				, C.BODY
+				, TO_CHAR(C.WRITE_DATE, 'YYYY.MM.DD HH:MI:SS') WRITE_DATE
+				, C.VIEW_COUNT
+				, C.RECOMMEND_COUNT
+				, C.REQUEST_IP
+				, C.DISPLAY_FILE_NAME
+				, M.NO M_NO
+				, M.ID
+				, M.NICKNAME
+		FROM	COMMUNITY C
+				, MEMBER M
+		WHERE	C.MEMBER_NO = M.NO
+		ORDER	BY C.NO DESC
+	</select>
+	
+	<select id="selectOneCommunity" parameterType="_int" resultType="CommunityVO">
+		SELECT	C.NO
+				, C.MEMBER_NO
+				, C.BODY
+				, TO_CHAR(C.WRITE_DATE, 'YYYY.MM.DD HH:MI:SS') WRITE_DATE
+				, C.VIEW_COUNT
+				, C.RECOMMEND_COUNT
+				, C.REQUEST_IP
+				, C.DISPLAY_FILE_NAME
+				, M.NO M_NO
+				, M.ID
+				, M.NICKNAME
+		FROM	COMMUNITY C
+				, MEMBER M
+		WHERE	C.MEMBER_NO = M.NO(+)
+		AND		C.NO = #{no}
+	</select>
+	
+	<insert id="insertCommunity" parameterType="CommunityVO">
+		INSERT INTO COMMUNITY (
+									NO
+									, MEMBER_NO
+									, TITLE
+									, BODY
+									, WRITE_DATE
+									, VIEW_COUNT
+									, RECOMMEND_COUNT
+									, REQUEST_IP
+									, DISPLAY_FILE_NAME
+							  )
+		VALUES				  (
+									COMMUNITY_NO_SEQ.NEXTVAL
+									, #{memberNo}
+									, #{title}
+									, #{body}
+									, SYSDATE
+									, 0
+									, 0
+									, #{requestIp}
+									, #{displayFilename}
+							  )
+	</insert>
+
 </mapper>

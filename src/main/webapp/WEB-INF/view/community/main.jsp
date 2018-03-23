@@ -31,7 +31,16 @@
 						<th>작성일</th>
 						<th>조회수</th>
 					</tr>
-
+					<c:forEach items="${communityList}" var="community">
+						<tr>
+							<td>${community.no}</td>
+							<td>${community.title}</td>
+							<td>${community.memberVO.nickname}(${community.memberVO.email})</td>
+							<td>${community.writeDate}</td>
+							<td>${community.viewCount}</td>
+							<td>${community.recommendCount}</td>
+						</tr>
+					</c:forEach>
 				</table>
 			</div>
 
