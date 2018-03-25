@@ -14,13 +14,23 @@ public class CommunityDaoImplForOracle extends SqlSessionDaoSupport implements C
 	}
 
 	@Override
-	public CommunityVO selectOneCommunity(int id) {
-		return getSqlSession().selectOne("CommunityDao.selectOneCommunity", id);
+	public CommunityVO selectOneCommunity(int no) {
+		return getSqlSession().selectOne("CommunityDao.selectOneCommunity", no);
 	}
 
 	@Override
 	public int insertCommunity(CommunityVO communityVO) {
 		return getSqlSession().insert("CommunityDao.insertCommunity", communityVO);
+	}
+
+	@Override
+	public int increaseViewCount(int no) {
+		return getSqlSession().update("CommunityDao.increaseViewCount", no);
+	}
+
+	@Override
+	public int increaseRecommendCount(int no) {
+		return getSqlSession().update("CommunityDao.increaseRecommendCount", no);
 	}
 
 }

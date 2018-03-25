@@ -12,10 +12,12 @@
 <script type="text/javascript">
 	$().ready(function() {
 		$("#writeBtn").click(function() {
+			
 			$("#writeForm").attr({
 				"method": "post",
 				"action": "<c:url value="/write"/>"
 			}).submit();
+			
 		});
 	});
 </script>
@@ -25,15 +27,27 @@
 		<jsp:include page="/WEB-INF/view/template/menu.jsp"/>
 		<form:form modelAttribute="writeForm" enctype="multipart/form-data">
 			<div>
-				제목 : <input type="text" id="title" name="title" placeholder="제목을 입력하세요."/>
+				제목 : <input type="text" id="title" name="title" value="${community.title}" placeholder="제목을 입력하세요."/>
 			</div>
 			
 			<div>
-				내용 : <textarea rows="10" cols="30" id="body" name="body" placeholder="내용을 입력하세요."></textarea>
+				<form:errors path="title"/>
+			</div>
+			
+			<div>
+				내용 : <textarea rows="10" cols="30" id="body" name="body" placeholder="내용을 입력하세요.">${community.body}</textarea>
+			</div>
+			
+			<div>
+				<form:errors path="body"/>
 			</div>
 			
 			<div>
 				<input type="file" id="file" name="file"/>
+			</div>
+			
+			<div>
+				<input type="hidden" id="memberNo" name="memberNo" value="${sessionScope.__USER__.no}"/>
 			</div>
 			
 			<div>

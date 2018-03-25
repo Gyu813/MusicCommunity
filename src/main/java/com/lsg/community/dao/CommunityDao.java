@@ -8,8 +8,12 @@ public interface CommunityDao {
 	
 	public List<CommunityVO> selectAllCommunities();
 	
-	public CommunityVO selectOneCommunity(int id);
+	public CommunityVO selectOneCommunity(int no);
 	
 	public int insertCommunity(CommunityVO communityVO);
+	
+	public int increaseViewCount(int no);
+	
+	public int increaseRecommendCount(int no);
 
 }

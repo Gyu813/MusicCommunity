@@ -19,13 +19,23 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	@Override
-	public CommunityVO getOneCommunity(int id) {
-		return communityDao.selectOneCommunity(id);
+	public CommunityVO getOneCommunity(int no) {
+		return communityDao.selectOneCommunity(no);
 	}
 
 	@Override
 	public boolean createCommunity(CommunityVO communityVO) {
 		return communityDao.insertCommunity(communityVO) > 0;
+	}
+
+	@Override
+	public boolean increaseViewCount(int no) {
+		return communityDao.increaseViewCount(no) > 0;
+	}
+
+	@Override
+	public boolean increaseRecommendCount(int no) {
+		return communityDao.increaseRecommendCount(no) > 0;
 	}
 	
 	

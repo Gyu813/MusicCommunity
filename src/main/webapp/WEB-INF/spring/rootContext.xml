@@ -43,7 +43,7 @@
 			<tx:method name="read*" rollback-for="RuntimeException"/>
 			<tx:method name="update*" rollback-for="RuntimeException"/>
 			<tx:method name="delete*" rollback-for="RuntimeException"/>
-			<tx:method name="increment*" rollback-for="RuntimeException"/>
+			<tx:method name="increase*" rollback-for="RuntimeException"/>
 		</tx:attributes>
 	</tx:advice>
 

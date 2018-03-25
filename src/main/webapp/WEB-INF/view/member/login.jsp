@@ -13,8 +13,8 @@
 	$().ready(function() {
 		
 		$("#loginBtn").click(function() {
-			
-			if ( $("#id").val() == "" ) {
+				
+			if ( $("#id").val() == "" ){
 				alert("아이디를 입력하세요!");
 				$("#id").focus();
 				return false;
@@ -25,15 +25,12 @@
 				$("#password").focus();
 				return false;
 			}
-				
+			
 			$("#loginForm").attr({
 				"action": "<c:url value="/login"/>",
 				"method": "post"
 			}).submit();
-		});
-		
-		$("#joinBtn").click(function() {
-			$(location).attr("href", "<c:url value="/join"/>");
+			
 		});
 		
 	});
@@ -42,9 +39,7 @@
 <body>
 	<!-- Whole Wrapper -->
 	<div>
-		<div style="display:inline-block">
-			<a href="<c:url value="/"/>">홈으로</a>
-		</div>
+		<jsp:include page="/WEB-INF/view/template/menu.jsp"/>
 		
 		<form:form modelAttribute="loginForm">
 			<div>		
@@ -57,10 +52,6 @@
 			
 			<div class="login">
 				<input type="button" id="loginBtn" value="로그인"/>
-			</div>
-			
-			<div class="join">
-				<input type="button" id="joinBtn" value="회원가입"/>
 			</div>
 			
 		</form:form>

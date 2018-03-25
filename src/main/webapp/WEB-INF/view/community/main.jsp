@@ -30,17 +30,32 @@
 						<th>작성자</th>
 						<th>작성일</th>
 						<th>조회수</th>
+						<th>추천수</th>
 					</tr>
 					<c:forEach items="${communityList}" var="community">
 						<tr>
 							<td>${community.no}</td>
-							<td>${community.title}</td>
-							<td>${community.memberVO.nickname}(${community.memberVO.email})</td>
+							<td><a href="<c:url value="/read/${community.no}"/>">${community.title}</a></td>
+							<td>
+								<c:choose>
+									<c:when test="${not empty community.memberVO}">
+										${community.memberVO.id}(${community.memberVO.nickname})
+									</c:when>
+									<c:otherwise>
+										탈퇴한 회원
+									</c:otherwise>
+								</c:choose>
+							</td>
 							<td>${community.writeDate}</td>
 							<td>${community.viewCount}</td>
 							<td>${community.recommendCount}</td>
 						</tr>
 					</c:forEach>
+					<c:if test="${empty communityList}">
+						<tr>
+							<td colspan="5">등록된 게시글이 없습니다.</td>
+						</tr>
+					</c:if>
 				</table>
 			</div>
 

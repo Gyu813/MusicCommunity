@@ -1,5 +1,10 @@
 package com.lsg.community.vo;
 
+import java.io.File;
+import java.io.IOException;
+
+import javax.validation.constraints.NotEmpty;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import com.lsg.member.vo.MemberVO;
@@ -8,8 +13,13 @@ public class CommunityVO {
 
 	private int no;
 	private int memberNo;
+	
+	@NotEmpty(message="제목을 입력해 주세요!")
 	private String title;
+	
+	@NotEmpty(message="내용을 입력해 주세요!")
 	private String body;
+	
 	private String writeDate;
 	private int viewCount;
 	private int recommendCount;
@@ -26,11 +36,11 @@ public class CommunityVO {
 		this.no = no;
 	}
 
-	public int getUserNo() {
+	public int getMemberNo() {
 		return memberNo;
 	}
 
-	public void setUserNo(int memberNo) {
+	public void setMemberNo(int memberNo) {
 		this.memberNo = memberNo;
 	}
 
@@ -91,6 +101,9 @@ public class CommunityVO {
 	}
 
 	public String getDisplayFilename() {
+		if ( displayFilename == null ) {
+			displayFilename = "";
+		}
 		return displayFilename;
 	}
 
@@ -108,6 +121,20 @@ public class CommunityVO {
 	
 	public String save() {
 		
+		if ( file != null && !file.isEmpty() ) {
+			
+			displayFilename = file.getOriginalFilename();
+			
+			File newFile = new File("D:/uploadFiles/" + file.getOriginalFilename());
+			try {
+				file.transferTo(newFile);
+				return newFile.getAbsolutePath();
+			} catch (IllegalStateException ise) {
+				throw new RuntimeException(ise.getMessage(), ise);
+			} catch (IOException ioe) {
+				throw new RuntimeException(ioe.getMessage(), ioe);
+			}
+		}
 		
 		return null;
 	}

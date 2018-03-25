@@ -60,7 +60,10 @@ public class MemberController {
 	public ModelAndView doJoinAction(@ModelAttribute("joinForm") @Valid MemberVO memberVO, Errors errors) {
 		
 		if ( errors.hasErrors() ) {
-			return new ModelAndView("member/join");
+			ModelAndView view = new ModelAndView();
+			view.setViewName("member/join");
+			view.addObject("member", memberVO);
+			return view;
 		}
 		
 		if ( memberService.createMember(memberVO) ) {
