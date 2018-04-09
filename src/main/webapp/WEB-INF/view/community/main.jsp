@@ -39,6 +39,7 @@
 							<td>
 								<c:choose>
 									<c:when test="${not empty community.memberVO}">
+										<img src="<c:url value="/profile/${community.memberNo}"/>" width="30px" height="40px"/>
 										${community.memberVO.id}(${community.memberVO.nickname})
 									</c:when>
 									<c:otherwise>

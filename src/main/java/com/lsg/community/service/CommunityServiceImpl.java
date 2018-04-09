@@ -37,6 +37,16 @@ public class CommunityServiceImpl implements CommunityService {
 	public boolean increaseRecommendCount(int no) {
 		return communityDao.increaseRecommendCount(no) > 0;
 	}
+
+	@Override
+	public boolean modifyCommunity(CommunityVO communityVO) {
+		return communityDao.updateCommunity(communityVO) > 0;
+	}
+
+	@Override
+	public boolean removeCommunity(int no) {
+		return communityDao.deleteCommunity(no) > 0;
+	}
 	
 	
 }

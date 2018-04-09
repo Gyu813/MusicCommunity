@@ -8,29 +8,66 @@
 
 	<!-- 인터페이스에있는 메소드 이름 -->
 	<insert id="insertMember" parameterType="MemberVO">
-		INSERT INTO MEMBER (
-			NO
-			, ID
-			, PASSWORD
-			, NICKNAME
-			, REGIST_DATE
-		)
-		VALUES (
-			MEMBER_NO_SEQ.NEXTVAL
-			, #{id}
-			, #{password}
-			, #{nickname}
-			, SYSDATE
-		)
+		INSERT INTO MEMBER	(
+								NO
+								, ID
+								, PASSWORD
+								, NICKNAME
+								, REGIST_DATE
+								, SELF_INTRODUCTION
+								, PROFILE_FILE_NAME
+							)
+		VALUES 				(
+								MEMBER_NO_SEQ.NEXTVAL
+								, #{id}
+								, #{password}
+								, #{nickname}
+								, SYSDATE
+								, #{selfIntroduction}
+								, #{profileFilename}
+							)
 	</insert>
 	
 	<select id="selectOneMember" parameterType="MemberVO" resultType="MemberVO">
 		SELECT	NO
 				, ID
 				, NICKNAME
-				, REGIST_DATE registDate
+				, TO_CHAR(REGIST_DATE, 'YYYY.MM.DD') registDate
+				, SELF_INTRODUCTION selfIntroduction
+				, PROFILE_FILE_NAME profileFilename
 		FROM	MEMBER
 		WHERE	ID = #{id}
 		AND		PASSWORD = #{password}
 	</select>
+	
+	<select id="selectOneMemberByNo" parameterType="_int" resultType="MemberVO">
+		SELECT	NO
+				, ID
+				, NICKNAME
+				, TO_CHAR(REGIST_DATE, 'YYYY.MM.DD') registDate
+				, SELF_INTRODUCTION selfIntroduction
+				, PROFILE_FILE_NAME profileFilename
+		FROM	MEMBER
+		WHERE	NO = #{no}
+	</select>
+	
+	<update id="updateMember" parameterType="MemberVO">
+		UPDATE	MEMBER
+		SET		MODIFY_DATE = SYSDATE
+				<if test="nickname != null and nickname != ''">
+				, NICKNAME = #{nickname}
+				</if>
+				<if test="selfIntroduction != null and selfIntroduction != ''">
+				, SELF_INTRODUCTION = #{selfIntroduction}
+				</if>
+				<if test="profileFilename != null and profileFilename != ''">
+				, PROFILE_FILE_NAME = #{profileFilename}
+				</if>
+		WHERE	NO = #{no}
+	</update>
+	
+	<delete id="deleteMember" parameterType="_int">
+		DELETE	FROM	MEMBER
+		WHERE			NO = #{no}
+	</delete>
 </mapper>

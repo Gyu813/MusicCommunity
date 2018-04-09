@@ -13,13 +13,24 @@
 		<jsp:include page="/WEB-INF/view/template/menu.jsp"/>
 		
 		<h1>${community.title}</h1>
-		<h3>${community.memberVO.id}(${community.memberVO.nickname}) | ${community.requestIp}</h3>
+		<c:choose>
+			<c:when test="${not empty community.memberVO}">
+				<h3>${community.memberVO.id}(${community.memberVO.nickname}) | ${community.requestIp}</h3>
+			</c:when>
+			<c:otherwise>
+				<h3>탈퇴한 회원 | ${community.requestIp}</h3>
+			</c:otherwise>
+		</c:choose>
 		<p>${community.viewCount} | ${community.recommendCount} | ${community.writeDate}</p>
 		<hr/>
 		<p>${community.body}</p>
+		
 		<c:if test="${not empty community.displayFilename}">
-			<!-- TODO video 넣기 -->
-			<p>${community.displayFilename}</p>
+			<p>파일 : ${community.displayFilename}</p>
+			
+			<video controls>
+				<source src="<c:url value="/play/${community.no}"/>" type="video/mp4">
+			</video>
 		</c:if>
 		
 		<hr/>
@@ -35,6 +46,10 @@
 		<div>
 			<a href="<c:url value="/"/>">뒤로가기</a>
 			<a href="<c:url value="/recommend/${community.no}"/>">추천하기</a>
+			<c:if test="${community.memberVO.no == sessionScope.__USER__.no}">
+				<a href="<c:url value="/modify/${community.no}"/>">수정하기</a>
+				<a href="<c:url value="/remove/${community.no}"/>">삭제하기</a>
+			</c:if>
 		</div>
 	</div>
 </body>

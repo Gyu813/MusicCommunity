@@ -33,4 +33,14 @@ public class CommunityDaoImplForOracle extends SqlSessionDaoSupport implements C
 		return getSqlSession().update("CommunityDao.increaseRecommendCount", no);
 	}
 
+	@Override
+	public int updateCommunity(CommunityVO communityVO) {
+		return getSqlSession().update("CommunityDao.updateCommunity", communityVO);
+	}
+
+	@Override
+	public int deleteCommunity(int no) {
+		return getSqlSession().delete("CommunityDao.deleteCommunity", no);
+	}
+
 }

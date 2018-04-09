@@ -32,7 +32,7 @@
 		<c:if test="${not empty sessionScope.__USER__}">
 			<li>
 				${sessionScope.__USER__.nickname}님, 환영합니다!
-				<a href="<c:url value="/myPage"/>">회원정보수정</a>
+				<a href="<c:url value="/mypage"/>">회원정보수정</a>
 				<a href="<c:url value="/logout"/>">로그아웃</a>
 			</li>
 		</c:if>

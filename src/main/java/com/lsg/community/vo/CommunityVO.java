@@ -108,6 +108,9 @@ public class CommunityVO {
 	}
 
 	public void setDisplayFilename(String displayFilename) {
+		if ( displayFilename == null ) {
+			displayFilename = "";
+		}
 		this.displayFilename = displayFilename;
 	}
 
@@ -122,7 +125,6 @@ public class CommunityVO {
 	public String save() {
 		
 		if ( file != null && !file.isEmpty() ) {
-			
 			displayFilename = file.getOriginalFilename();
 			
 			File newFile = new File("D:/uploadFiles/" + file.getOriginalFilename());

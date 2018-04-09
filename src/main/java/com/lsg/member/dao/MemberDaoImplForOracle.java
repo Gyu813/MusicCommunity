@@ -15,5 +15,20 @@ public class MemberDaoImplForOracle extends SqlSessionDaoSupport implements Memb
 	public MemberVO selectOneMember(MemberVO memberVO) {
 		return getSqlSession().selectOne("MemberDao.selectOneMember", memberVO);
 	}
+	
+	@Override
+	public MemberVO selectOneMemberByNo(int no) {
+		return getSqlSession().selectOne("MemberDao.selectOneMemberByNo", no);
+	}
+
+	@Override
+	public int updateMember(MemberVO memberVO) {
+		return getSqlSession().update("MemberDao.updateMember", memberVO);
+	}
+
+	@Override
+	public int deleteMember(int no) {
+		return getSqlSession().delete("MemberDao.deleteMember", no);
+	}
 
 }

@@ -15,5 +15,9 @@ public interface CommunityDao {
 	public int increaseViewCount(int no);
 	
 	public int increaseRecommendCount(int no);
+	
+	public int updateCommunity(CommunityVO communityVO);
+	
+	public int deleteCommunity(int no);
 
 }

@@ -1,6 +1,11 @@
 package com.lsg.member.vo;
 
+import java.io.File;
+import java.io.IOException;
+
 import javax.validation.constraints.NotEmpty;
+
+import org.springframework.web.multipart.MultipartFile;
 
 public class MemberVO {
 
@@ -15,7 +20,11 @@ public class MemberVO {
 	@NotEmpty(message="닉네임을 입력해주세요!")
 	private String nickname;
 	
+	private String selfIntroduction;
 	private String registDate;
+	private MultipartFile profileFile;
+	private String profileFilename;
+	private String modifyDate;
 
 	public int getNo() {
 		return no;
@@ -49,6 +58,17 @@ public class MemberVO {
 		this.nickname = nickname;
 	}
 
+	public String getSelfIntroduction() {
+		if ( selfIntroduction == null ) {
+			selfIntroduction = "";
+		}
+		return selfIntroduction;
+	}
+
+	public void setSelfIntroduction(String selfIntroduction) {
+		this.selfIntroduction = selfIntroduction;
+	}
+
 	public String getRegistDate() {
 		return registDate;
 	}
@@ -57,4 +77,53 @@ public class MemberVO {
 		this.registDate = registDate;
 	}
 
+	public MultipartFile getProfileFile() {
+		return profileFile;
+	}
+
+	public void setProfileFile(MultipartFile profileFile) {
+		this.profileFile = profileFile;
+	}
+
+	public String getProfileFilename() {
+		if ( profileFilename == null ) {
+			profileFilename = "";
+		}
+		return profileFilename;
+	}
+
+	public void setProfileFilename(String profileFilename) {
+		if ( profileFilename == null ) {
+			profileFilename = "";
+		}
+		this.profileFilename = profileFilename;
+	}
+	
+	public String getModifyDate() {
+		return modifyDate;
+	}
+
+	public void setModifyDate(String modifyDate) {
+		this.modifyDate = modifyDate;
+	}
+
+	public String save() {
+		
+		if ( profileFile != null && !profileFile.isEmpty() ) {
+			profileFilename = profileFile.getOriginalFilename();
+			
+			File newFile = new File("D:/uploadProfiles/" + profileFile.getOriginalFilename());
+			try {
+				profileFile.transferTo(newFile);
+				return newFile.getAbsolutePath();
+			} catch (IllegalStateException ise) {
+				throw new RuntimeException(ise.getMessage(), ise);
+			} catch (IOException ioe) {
+				throw new RuntimeException(ioe.getMessage(), ioe);
+			}
+		}
+		
+		return null;
+	}
+	
 }

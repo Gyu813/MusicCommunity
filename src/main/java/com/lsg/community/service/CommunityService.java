@@ -15,5 +15,9 @@ public interface CommunityService {
 	public boolean increaseViewCount(int no);
 	
 	public boolean increaseRecommendCount(int no);
+	
+	public boolean modifyCommunity(CommunityVO communityVO);
+	
+	public boolean removeCommunity(int no);
 
 }

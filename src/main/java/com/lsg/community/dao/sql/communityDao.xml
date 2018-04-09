@@ -23,6 +23,7 @@
 			<result column="ID" property="id"/>
 			<result column="NICKNAME" property="nickname"/>
 			<result column="REGIST_DATE" property="registDate"/>
+			<result column="PROFILE_FILE_NAME" property="profileFilename"/>
 		</association>
 	</resultMap>
 
@@ -31,7 +32,14 @@
 				, C.MEMBER_NO
 				, C.TITLE
 				, C.BODY
-				, TO_CHAR(C.WRITE_DATE, 'YYYY.MM.DD HH:MI:SS') WRITE_DATE
+				, (CASE
+					 WHEN C.WRITE_DATE > SYSDATE - 1 
+					 	THEN SUBSTR(TO_CHAR(C.WRITE_DATE, 'YYYY.MM.DD HH24:MI:SS'), 12, 5)
+           			 WHEN C.WRITE_DATE > ADD_MONTHS(SYSDATE, -1) 
+           			 	THEN SUBSTR(TO_CHAR(C.WRITE_DATE, 'YYYY.MM.DD HH24:MI:SS'), 6, 5)
+            		 ELSE 
+            		 	SUBSTR(TO_CHAR(C.WRITE_DATE, 'YYYY.MM.DD HH24:MI:SS'), 1, 10)
+				END) WRITE_DATE
 				, C.VIEW_COUNT
 				, C.RECOMMEND_COUNT
 				, C.REQUEST_IP
@@ -39,9 +47,10 @@
 				, M.NO M_NO
 				, M.ID
 				, M.NICKNAME
+				, M.PROFILE_FILE_NAME
 		FROM	COMMUNITY C
 				, MEMBER M
-		WHERE	C.MEMBER_NO = M.NO
+		WHERE	C.MEMBER_NO = M.NO(+)
 		ORDER	BY C.NO DESC
 	</select>
 	
@@ -50,7 +59,14 @@
 				, C.MEMBER_NO
 				, C.TITLE
 				, C.BODY
-				, TO_CHAR(C.WRITE_DATE, 'YYYY.MM.DD HH:MI:SS') WRITE_DATE
+				, (CASE
+					 WHEN C.WRITE_DATE > SYSDATE - 1 
+					 	THEN SUBSTR(TO_CHAR(C.WRITE_DATE, 'YYYY.MM.DD HH24:MI:SS'), 12, 5)
+           			 WHEN C.WRITE_DATE > ADD_MONTHS(SYSDATE, -1) 
+           			 	THEN SUBSTR(TO_CHAR(C.WRITE_DATE, 'YYYY.MM.DD HH24:MI:SS'), 6, 5)
+            		 ELSE 
+            		 	TO_CHAR(C.WRITE_DATE, 'YYYY.MM.DD')
+				END) WRITE_DATE
 				, C.VIEW_COUNT
 				, C.RECOMMEND_COUNT
 				, C.REQUEST_IP
@@ -58,9 +74,10 @@
 				, M.NO M_NO
 				, M.ID
 				, M.NICKNAME
+				, M.PROFILE_FILE_NAME
 		FROM	COMMUNITY C
 				, MEMBER M
-		WHERE	C.MEMBER_NO = M.NO
+		WHERE	C.MEMBER_NO = M.NO(+)
 		AND		C.NO = #{no}
 	</select>
 	
@@ -100,5 +117,29 @@
 		SET		RECOMMEND_COUNT = RECOMMEND_COUNT + 1
 		WHERE	NO = #{no}
 	</update>
+	
+	<update id="updateCommunity" parameterType="CommunityVO">
+		UPDATE	COMMUNITY
+		SET		WRITE_DATE = SYSDATE
+				<if test="requestIp != null and requestIp != ''">
+				, REQUEST_IP = #{requestIp}
+				</if>
+				<if test="title != null and title != ''">
+				, TITLE = #{title}
+				</if>
+				<if test="body != null and body != ''">
+				, BODY = #{body}
+				</if>
+				<if test="displayFilename != null and displayFilename != ''">
+				, DISPLAY_FILE_NAME = #{displayFilename}
+				</if>
+		WHERE	NO = #{no}
+		AND		MEMBER_NO = #{memberNo}
+	</update>
+	
+	<delete id="deleteCommunity" parameterType="_int">
+		DELETE	FROM	COMMUNITY
+		WHERE			NO = #{no}
+	</delete>
 
 </mapper>

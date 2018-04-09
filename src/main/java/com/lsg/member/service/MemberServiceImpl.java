@@ -21,4 +21,19 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.selectOneMember(memberVO);
 	}
 	
+	@Override
+	public MemberVO getOneMemberByNo(int no) {
+		return memberDao.selectOneMemberByNo(no);
+	}
+
+	@Override
+	public boolean modifyMyInfo(MemberVO memberVO) {
+		return memberDao.updateMember(memberVO) > 0;
+	}
+
+	@Override
+	public boolean dropMember(int no) {
+		return memberDao.deleteMember(no) > 0;
+	}
+	
 }

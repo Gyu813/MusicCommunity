@@ -12,7 +12,7 @@
 	$().ready(function() {
 		
 		$("#joinBtn").click(function() {
-			
+
 			if( $("#password").val() != $("#passwordConfirm").val() ) {
 				alert("비밀번호와 비밀번호확인이 같지 않습니다!");
 				return false;
@@ -32,10 +32,9 @@
 	<!-- Whole Wrapper -->
 	<div>
 		<jsp:include page="/WEB-INF/view/template/menu.jsp"/>
+		<form:form modelAttribute="joinForm" enctype="multipart/form-data">
 		
-		<form:form modelAttribute="joinForm">
-		
-			<div style="display: inline-block;">
+			<div style="display: inline-block;">	
 				<div>
 					아이디 <input type="text" id="id" name="id" placeholder="아이디를 입력하세요." value="${member.id}"/>
 				</div>
@@ -67,6 +66,14 @@
 			
 			<div>
 				<form:errors path="nickname"/>
+			</div>
+			
+			<div>
+				자기소개 <textarea name="selfIntroduction" rows="10" cols="35"></textarea>
+			</div>
+			
+			<div>
+				프로필<input type="file" id="profileFile" name="profileFile"/>
 			</div>
 			
 			<div>

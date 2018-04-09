@@ -11,11 +11,37 @@
 		type="text/javascript"></script>
 <script type="text/javascript">
 	$().ready(function() {
+	
+		<c:if test="${mode == 'modify' && not empty community.displayFilename}">
+			$("#file").closest("div").hide();
+		</c:if>
+		
+		$(".modifyFile input").click(function() {
+			var yChange = $("#yesChange").prop("checked");
+			var nChange = $("#noChange").prop("checked");
+			
+			if ( yChange ) {
+				$("input:radio[name='changeFile']:radio[value='N']").prop("checked", false);
+				$("#file").closest("div").show();
+			}
+			if ( nChange ) {
+				$("input:radio[name='changeFile']:radio[value='Y']").prop("checked", false);
+				$("#file").closest("div").hide();
+			}
+		});
+		
 		$("#writeBtn").click(function() {
+			
+			if ( "${mode}" == "modify" ) {
+				var url = "<c:url value="/modify/${community.no}"/>";
+			}
+			else {
+				var url = "<c:url value="/write"/>";
+			}
 			
 			$("#writeForm").attr({
 				"method": "post",
-				"action": "<c:url value="/write"/>"
+				"action": url
 			}).submit();
 			
 		});
@@ -42,10 +68,24 @@
 				<form:errors path="body"/>
 			</div>
 			
+			<c:if test="${mode == 'modify' && not empty community.displayFilename}">
+				첨부파일을 바꾸시겠습니까?
+				<div class="modifyFile">
+					<div>
+						<label><input type="radio" id="yesChange" name="changeFile" value="Y"/>네</label>
+					</div>
+					<div>
+						<label><input type="radio" id="noChange" name="changeFile" value="N" checked="checked"/>아니오</label>
+					</div>
+					현재파일 : ${community.displayFilename}
+				</div>
+				
+			</c:if>
+
 			<div>
 				<input type="file" id="file" name="file"/>
 			</div>
-			
+
 			<div>
 				<input type="hidden" id="memberNo" name="memberNo" value="${sessionScope.__USER__.no}"/>
 			</div>

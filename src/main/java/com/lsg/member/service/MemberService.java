@@ -8,4 +8,10 @@ public interface MemberService {
 	
 	public MemberVO getOneMember(MemberVO memberVO);
 	
+	public MemberVO getOneMemberByNo(int no);
+	
+	public boolean modifyMyInfo(MemberVO memberVO);
+	
+	public boolean dropMember(int no);
+	
 }
