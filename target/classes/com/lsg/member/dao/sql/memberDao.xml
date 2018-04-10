@@ -70,4 +70,10 @@
 		DELETE	FROM	MEMBER
 		WHERE			NO = #{no}
 	</delete>
+	
+	<select id="selectCountMemberId" parameterType="string" resultType="_int">
+		SELECT	COUNT(ID)
+		FROM	MEMBER
+		WHERE	ID = #{id}
+	</select>
 </mapper>

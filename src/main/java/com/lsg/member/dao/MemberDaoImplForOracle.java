@@ -31,4 +31,9 @@ public class MemberDaoImplForOracle extends SqlSessionDaoSupport implements Memb
 		return getSqlSession().delete("MemberDao.deleteMember", no);
 	}
 
+	@Override
+	public int selectCountMemberId(String id) {
+		return getSqlSession().selectOne("MemberDao.selectCountMemberId", id);
+	}
+
 }

@@ -13,5 +13,7 @@ public interface MemberDao {
 	public int updateMember(MemberVO memberVO);
 	
 	public int deleteMember(int no);
+	
+	public int selectCountMemberId(String id);
 
 }

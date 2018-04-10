@@ -14,4 +14,6 @@ public interface MemberService {
 	
 	public boolean dropMember(int no);
 	
+	public boolean readCountMemberId(String id);
+	
 }

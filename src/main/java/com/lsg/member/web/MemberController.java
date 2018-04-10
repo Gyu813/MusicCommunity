@@ -2,6 +2,8 @@ package com.lsg.member.web;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.lsg.community.service.CommunityService;
@@ -65,14 +69,11 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
-	public ModelAndView doJoinAction(@ModelAttribute("joinForm")
-									 @Valid MemberVO memberVO, Errors errors) {
+	public String doJoinAction(@ModelAttribute("joinForm")
+							   @Valid MemberVO memberVO, Errors errors) {
 		
 		if ( errors.hasErrors() ) {
-			ModelAndView view = new ModelAndView();
-			view.setViewName("member/join");
-			view.addObject("member", memberVO);
-			return view;
+			return "member/join";
 		}
 		
 		memberVO.save();
@@ -80,11 +81,10 @@ public class MemberController {
 		boolean isSuccess = memberService.createMember(memberVO);
 		
 		if ( isSuccess ) {
-			return new ModelAndView("redirect:/login");
+			return "redirect:/login";
 		}
 		
-		return new ModelAndView("member/join");
-		
+		return "member/join";
 	}
 	
 	@RequestMapping("/logout")
@@ -181,6 +181,18 @@ public class MemberController {
 		}
 		
 		return "member/mypage";
+	}
+	
+	@RequestMapping("/api/exists/id")
+	@ResponseBody
+	public Map<String, Boolean> apiIsExistsId(@RequestParam String id) {
+		
+		boolean isExists = memberService.readCountMemberId(id);
+		
+		Map<String, Boolean> response = new HashMap<String, Boolean>();
+		response.put("response", isExists);
+		
+		return response;
 	}
 	
 }

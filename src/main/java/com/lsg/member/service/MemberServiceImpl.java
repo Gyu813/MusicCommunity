@@ -35,5 +35,10 @@ public class MemberServiceImpl implements MemberService {
 	public boolean dropMember(int no) {
 		return memberDao.deleteMember(no) > 0;
 	}
+
+	@Override
+	public boolean readCountMemberId(String id) {
+		return memberDao.selectCountMemberId(id) > 0;
+	}
 	
 }
