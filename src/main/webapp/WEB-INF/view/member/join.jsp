@@ -44,31 +44,31 @@
 						alert("이 아이디는 사용할 수 없습니다.");
 						$("#id").focus();
 						return false;
+					} else {
+						
+						if ( $("#nickname").val() == "" ) {
+							alert("닉네임을 입력하세요.");
+							$("#nickname").focus();
+							return false;
+						}
+						
+						if ( $("#password").val() == "" ) {
+							alert("비밀번호를 입력하세요.");
+							$("#password").focus();
+							return false;
+						}
+						
+						if( $("#password").val() != $("#passwordConfirm").val() ) {
+							alert("비밀번호와 비밀번호확인이 같지 않습니다!");
+							return false;
+						}
+						
+						$("#joinForm").attr({
+							"method": "post",
+							"action": "<c:url value="/join"/>"
+						}).submit();
 					}
 				});
-				
-				if ( $("#nickname").val() == "" ) {
-					alert("닉네임을 입력하세요.");
-					$("#nickname").focus();
-					return false;
-				}
-				
-				if ( $("#password").val() == "" ) {
-					alert("비밀번호를 입력하세요.");
-					$("#password").focus();
-					return false;
-				}
-				
-				if( $("#password").val() != $("#passwordConfirm").val() ) {
-					alert("비밀번호와 비밀번호확인이 같지 않습니다!");
-					return false;
-				}
-				
-				$("#joinForm").attr({
-					"method": "post",
-					"action": "<c:url value="/join"/>"
-				}).submit();
-				
 			} else {
 				alert("아이디 중복체크를 먼저 하세요.");
 			}

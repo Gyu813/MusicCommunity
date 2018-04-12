@@ -36,4 +36,9 @@ public class MemberDaoImplForOracle extends SqlSessionDaoSupport implements Memb
 		return getSqlSession().selectOne("MemberDao.selectCountMemberId", id);
 	}
 
+	@Override
+	public String selectSalt(String id) {
+		return getSqlSession().selectOne("MemberDao.selectSalt", id);
+	}
+
 }

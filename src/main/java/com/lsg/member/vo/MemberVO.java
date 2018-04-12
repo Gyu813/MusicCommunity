@@ -25,6 +25,7 @@ public class MemberVO {
 	private MultipartFile profileFile;
 	private String profileFilename;
 	private String modifyDate;
+	private String salt;
 
 	public int getNo() {
 		return no;
@@ -105,6 +106,14 @@ public class MemberVO {
 
 	public void setModifyDate(String modifyDate) {
 		this.modifyDate = modifyDate;
+	}
+
+	public String getSalt() {
+		return salt;
+	}
+
+	public void setSalt(String salt) {
+		this.salt = salt;
 	}
 
 	public String save() {

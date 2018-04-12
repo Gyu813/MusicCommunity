@@ -16,6 +16,7 @@
 								, REGIST_DATE
 								, SELF_INTRODUCTION
 								, PROFILE_FILE_NAME
+								, SALT
 							)
 		VALUES 				(
 								MEMBER_NO_SEQ.NEXTVAL
@@ -25,6 +26,7 @@
 								, SYSDATE
 								, #{selfIntroduction}
 								, #{profileFilename}
+								, #{salt}
 							)
 	</insert>
 	
@@ -35,6 +37,7 @@
 				, TO_CHAR(REGIST_DATE, 'YYYY.MM.DD') registDate
 				, SELF_INTRODUCTION selfIntroduction
 				, PROFILE_FILE_NAME profileFilename
+				, SALT
 		FROM	MEMBER
 		WHERE	ID = #{id}
 		AND		PASSWORD = #{password}
@@ -73,6 +76,12 @@
 	
 	<select id="selectCountMemberId" parameterType="string" resultType="_int">
 		SELECT	COUNT(ID)
+		FROM	MEMBER
+		WHERE	ID = #{id}
+	</select>
+	
+	<select id="selectSalt" parameterType="string" resultType="string">
+		SELECT	NVL(SALT, '')
 		FROM	MEMBER
 		WHERE	ID = #{id}
 	</select>

@@ -6,6 +6,21 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Detail Page</title>
+<script type="text/javascript" src="<c:url value="/static/js/jquery-3.3.1.min.js"/>"></script>
+<script type="text/javascript">
+	$().ready(function() {
+		$("#removeBtn").click(function() {
+			var result = confirm("정말 삭제하시겠습니까?");
+			if ( result ) { // result가 true일 경우
+				$(location).attr("href", "<c:url value="/remove/${community.no}"/>");
+			}
+		});
+		
+		$("#modifyBtn").click(function() {
+			$(location).attr("href", "<c:url value="/modify/${community.no}"/>");
+		});
+	});
+</script>
 </head>
 <body>
 	<!-- Whole Wrapper -->
@@ -47,8 +62,8 @@
 			<a href="<c:url value="/"/>">뒤로가기</a>
 			<a href="<c:url value="/recommend/${community.no}"/>">추천하기</a>
 			<c:if test="${community.memberVO.no == sessionScope.__USER__.no}">
-				<a href="<c:url value="/modify/${community.no}"/>">수정하기</a>
-				<a href="<c:url value="/remove/${community.no}"/>">삭제하기</a>
+				<input type="button" id="modifyBtn" value="글 수정"/>
+				<input type="button" id="removeBtn" value="글 삭제"/>
 			</c:if>
 		</div>
 	</div>

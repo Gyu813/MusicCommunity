@@ -10,7 +10,8 @@
 	
 	<bean	id="memberService"
 			class="com.lsg.member.service.MemberServiceImpl">
-		<property name="memberDao" ref="memberDao"/>		
+		<property name="memberDao" ref="memberDao"/>	
+		<property name="communityDao" ref="communityDao"/>	
 	</bean>
 	
 </beans>

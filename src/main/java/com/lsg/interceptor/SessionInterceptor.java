@@ -12,11 +12,9 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		System.out.println("인터셉터");
 		String contextPath = request.getContextPath();
 		
 		if ( request.getSession().getAttribute(Member.USER) == null ) {
-			System.out.println("인터셉터 if문");
 			response.sendRedirect(contextPath + "/login");
 			return false;
 		}

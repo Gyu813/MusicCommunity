@@ -177,7 +177,7 @@ public class MemberController {
 		
 		if ( isSuccess ) {
 			session.invalidate();
-			return "redirect:/";
+			return "member/drop/drop";
 		}
 		
 		return "member/mypage";
@@ -193,6 +193,34 @@ public class MemberController {
 		response.put("response", isExists);
 		
 		return response;
+	}
+	
+	@RequestMapping("drop/step1")
+	public String viewVerifyPage() {
+		return "member/drop/step1";
+	}
+	
+	@RequestMapping("drop/step2")
+	public ModelAndView viewRemoveMyCommunitiesPage(
+			@RequestParam(required = false, defaultValue = "") String password,
+			HttpSession session) {
+		
+		if ( password.length() == 0 ) {
+			return new ModelAndView("error/404");
+		}
+		MemberVO member = (MemberVO) session.getAttribute(Member.USER);
+		member.setPassword(password);
+		
+		MemberVO verifyMember = memberService.getOneMember(member);
+		if ( verifyMember == null ) { // 비밀번호가 다를 경우
+			return new ModelAndView("redirect:/drop/step1");
+		}
+		
+		ModelAndView view = new ModelAndView();
+		view.setViewName("member/drop/step2");
+		view.addObject("member", verifyMember);
+		
+		return view;
 	}
 	
 }

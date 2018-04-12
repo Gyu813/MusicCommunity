@@ -141,5 +141,10 @@
 		DELETE	FROM	COMMUNITY
 		WHERE			NO = #{no}
 	</delete>
+	
+	<delete id="deleteMyCommunities" parameterType="_int">
+		DELETE	FROM	COMMUNITY
+		WHERE			MEMBER_NO = #{memberNo}
+	</delete>
 
 </mapper>

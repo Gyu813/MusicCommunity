@@ -43,4 +43,9 @@ public class CommunityDaoImplForOracle extends SqlSessionDaoSupport implements C
 		return getSqlSession().delete("CommunityDao.deleteCommunity", no);
 	}
 
+	@Override
+	public int deleteMyCommunities(int memberNo) {
+		return getSqlSession().delete("CommunityDao.deleteMyCommunities", memberNo);
+	}
+
 }

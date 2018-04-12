@@ -10,7 +10,7 @@
 	
 	<bean	id="memberController"
 			class="com.lsg.member.web.MemberController">
-		<property name="memberService" ref="memberService"/>
+		<property name="memberService" ref="memberService"/>		
 	</bean>
 
 </beans>

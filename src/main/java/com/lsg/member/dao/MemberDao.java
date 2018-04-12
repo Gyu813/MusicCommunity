@@ -15,5 +15,7 @@ public interface MemberDao {
 	public int deleteMember(int no);
 	
 	public int selectCountMemberId(String id);
+	
+	public String selectSalt(String id);
 
 }

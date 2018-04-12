@@ -48,5 +48,4 @@ public class CommunityServiceImpl implements CommunityService {
 		return communityDao.deleteCommunity(no) > 0;
 	}
 	
-	
 }

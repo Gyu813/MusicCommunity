@@ -45,7 +45,7 @@
 		});
 		
 		$("#dropBtn").click(function() {
-			$(location).attr("href", "<c:url value="/drop/${sessionScope.__USER__.no}"/>");
+			$(location).attr("href", "<c:url value="/drop/step1"/>");
 		});
 		
 	});
