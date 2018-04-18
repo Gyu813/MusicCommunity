@@ -12,5 +12,10 @@
 			class="com.lsg.member.web.MemberController">
 		<property name="memberService" ref="memberService"/>		
 	</bean>
+	
+	<bean	id="replyController"
+			class="com.lsg.reply.web.ReplyController">
+		<property name="replyService" ref="replyService"/>		
+	</bean>
 
 </beans>

@@ -9,6 +9,153 @@
 <script type="text/javascript" src="<c:url value="/static/js/jquery-3.3.1.min.js"/>"></script>
 <script type="text/javascript">
 	$().ready(function() {
+		
+		loadReplies(0);
+		function loadReplies(scrollTop) {
+			$.get("<c:url value="/api/reply/${community.no}"/>", {},
+					function(response) {
+						for ( var i in response) {
+							appendReplies(response[i]);
+						}
+						$(window).scrollTop(scrollTop);
+			});
+		}
+		
+		$("#writeReplyBtn").click(function() {
+			$.post("<c:url value="/api/reply/${community.no}"/>",
+					$("#writeReplyForm").serialize(),
+					function(response) {
+						if ( response.status ) {
+							$("#parentReplyNo").val(0);
+							$("#body").val("");
+							$("#createReply").appendTo("#createReplyDiv");
+							
+							var scrolltop = $(window).scrollTop();
+							
+							$("#replies").html("");
+							loadReplies(scrolltop);
+						} else {
+							alert("댓글 등록 실패!");
+						}
+						
+			});
+		});
+		
+		$("#replies").on("click", ".rereply", function() {
+			var parentReplyNo = $(this).closest(".reply").data("id");
+			$("#parentReplyNo").val(parentReplyNo);
+			$("#createReply").appendTo($(this).closest(".reply"));
+		});
+		
+	
+		$("#replies").on("click", ".love", function() {
+			var replyNo = $(this).data("id");
+			var that = $(this);
+			$.post("<c:url value='/api/love/" + replyNo + "'/>", {},
+					function(response) {
+						if ( response.response ) {
+							var loveCount = response.loveCount;
+							$(that).children(".loveCount").text(loveCount);
+						} else {
+							alert("좋아요 실패!");
+						}
+						
+			});
+		});
+		
+		$("#replies").on("click", ".hate", function() {
+			var replyNo = $(this).data("id");
+			var that = $(this);
+			$.post("<c:url value='/api/hate/" + replyNo + "'/>", {},
+					function(response) {
+						if ( response.response ) {
+							var hateCount = response.hateCount;
+							$(that).children(".hateCount").text(hateCount);
+						} else {
+							alert("싫어요 실패!");
+						}
+						
+			});
+		});
+		
+		$("#replies").on("click", ".remove", function() {
+			var replyNo = $(this).data("id");
+			var that = $(this);
+			var level = $(this).siblings(".writer").data("id");
+			var reply = $(this).parent(".reply");
+			var removeReplyDiv = $("<div><h3>[이 댓글은 삭제된 댓글입니다!]</h3></div>");
+			var result = confirm("정말 삭제하시겠습니까?");
+			var nextSiblingLevel = $(this).parent(".reply").next('.reply').children('.writer').data("id");
+			if ( result ) { // result가 true일 경우
+				if ( level == 1 && nextSiblingLevel == 2 ) { // 주댓글일 경우
+					$.post("<c:url value='/api/modifyBody/" + replyNo + "'/>", {},
+							function(response) {
+								if ( response.response ) {
+									$(that).parent(".reply").after(removeReplyDiv);
+									$(that).parent(".reply").remove();
+								} else {
+									alert("댓글삭제 실패!");
+								}
+					});
+				} else { // 대댓글일 경우
+					$.post("<c:url value='/api/remove/" + replyNo + "'/>", {},
+							function(response) {
+								if ( response.response ) {
+									$(that).parent(".reply").remove();
+								} else {
+									alert("댓글삭제 실패!");
+								}
+					});
+				}
+			}
+		});
+		
+		
+		function appendReplies(reply) {
+			
+			if ( reply.level-1 >= 2 ) {
+					reply.level = 2;
+			}
+			
+			var replyDiv = $("<div class='reply' style='padding-left:" + ((reply.level-1) * 50) + "px;' data-id='" + reply.no + "'></div>");
+			var removeReplyDiv = $("<div><h3>[이 댓글은 삭제된 댓글입니다!]</h3></div>");
+			
+			if ( reply.body == "removedReply" ) {
+				replyDiv.append(removeReplyDiv);
+			}
+			else {
+				var nickname = reply.memberVO.nickname + "(" + reply.memberVO.id + ")";
+				var top = $("<span class='writer' data-id='" + reply.level + "'>"
+							+ "<img src='<c:url value='/profile/" + reply.memberNo + "'/>' width='30px' height='40px'/>"
+							+ nickname + "</span><span class='registDate'>" + reply.registDate + "</span>");
+				replyDiv.append(top);
+				
+				var body = $("<div class='body'>" + reply.body + "</div>");
+				replyDiv.append(body);
+				
+				var loveHate = $("<span class='love' data-id='" + reply.no + "'>[좋아요]"
+								 + "<span class='loveCount'>" + reply.loveCount + "</span></span>"
+								 + " <span class='hate' data-id='" + reply.no + "'>[싫어요]"
+								 + "<span class='hateCount'>" + reply.hateCount + "</span></span>");
+				replyDiv.append(loveHate);
+				
+				var registRereply = $("<div class='rereply'>[답글 달기]</div>");
+				replyDiv.append(registRereply);
+				
+				var loginMemberNo = ${sessionScope.__USER__.no};			
+				var replyMemberNo = reply.memberNo;
+				var removeReply = $("<div class='remove' data-id='" + reply.no + "'>[삭제]</div>");
+				
+				if ( loginMemberNo == replyMemberNo ) {
+					replyDiv.append(removeReply);
+				}
+				
+			}
+			
+			$("#replies").append(replyDiv);
+			
+		}
+		
 		$("#removeBtn").click(function() {
 			var result = confirm("정말 삭제하시겠습니까?");
 			if ( result ) { // result가 true일 경우
@@ -50,11 +197,19 @@
 		
 		<hr/>
 		
-		<div>
-			<textarea rows="5" cols="40"></textarea>
+		<div id="replies"></div>
+		<div id="createReplyDiv">
+			<div id="createReply">
+				<form id="writeReplyForm">
+					<input type="hidden" id="parentReplyNo" name="parentReplyNo" value="0"/>
+					<div>
+						<textarea rows="5" cols="40" id="body" name="body"></textarea>
+					</div>
+					
+					<input type="button" id="writeReplyBtn" value="댓글등록"/>
+				</form>
+			</div>
 		</div>
-		
-		<input type="button" value="댓글달기"/>
 		
 		<hr/>
 		

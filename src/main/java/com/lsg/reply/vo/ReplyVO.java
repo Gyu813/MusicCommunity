@@ -1,20 +1,29 @@
-package com.lsg.comment.vo;
+package com.lsg.reply.vo;
 
 import com.lsg.community.vo.CommunityVO;
 import com.lsg.member.vo.MemberVO;
 
-public class CommentVO {
+public class ReplyVO {
 
+	private int level;
 	private int no;
 	private int memberNo;
 	private int communityNo;
 	private String body;
 	private String registDate;
-	private int parentCommentNo;
-
+	private int parentReplyNo;
+	private int loveCount;
+	private int hateCount;
 	private MemberVO memberVO;
 	private CommunityVO communityVO;
-	private CommentVO commentVO;
+
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
+	}
 
 	public int getNo() {
 		return no;
@@ -56,12 +65,28 @@ public class CommentVO {
 		this.registDate = registDate;
 	}
 
-	public int getParentCommentNo() {
-		return parentCommentNo;
+	public int getParentReplyNo() {
+		return parentReplyNo;
 	}
 
-	public void setParentCommentNo(int parentCommentNo) {
-		this.parentCommentNo = parentCommentNo;
+	public void setParentReplyNo(int parentReplyNo) {
+		this.parentReplyNo = parentReplyNo;
+	}
+
+	public int getLoveCount() {
+		return loveCount;
+	}
+
+	public void setLoveCount(int loveCount) {
+		this.loveCount = loveCount;
+	}
+
+	public int getHateCount() {
+		return hateCount;
+	}
+
+	public void setHateCount(int hateCount) {
+		this.hateCount = hateCount;
 	}
 
 	public MemberVO getMemberVO() {
@@ -78,14 +103,6 @@ public class CommentVO {
 
 	public void setCommunityVO(CommunityVO communityVO) {
 		this.communityVO = communityVO;
-	}
-
-	public CommentVO getCommentVO() {
-		return commentVO;
-	}
-
-	public void setCommentVO(CommentVO commentVO) {
-		this.commentVO = commentVO;
 	}
 
 }

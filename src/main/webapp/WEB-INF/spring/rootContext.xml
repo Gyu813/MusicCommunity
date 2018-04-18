@@ -40,7 +40,7 @@
 	<tx:advice id="rollbackRule" transaction-manager="transactionManager">
 		<tx:attributes>
 			<tx:method name="create*" rollback-for="RuntimeException"/>
-			<tx:method name="read*" rollback-for="RuntimeException"/>
+			<tx:method name="get*" rollback-for="RuntimeException"/>
 			<tx:method name="update*" rollback-for="RuntimeException"/>
 			<tx:method name="delete*" rollback-for="RuntimeException"/>
 			<tx:method name="increase*" rollback-for="RuntimeException"/>
