@@ -112,18 +112,15 @@
 		
 		
 		function appendReplies(reply) {
-			
 			if ( reply.level-1 >= 2 ) {
 					reply.level = 2;
 			}
-			
 			var replyDiv = $("<div class='reply' style='padding-left:" + ((reply.level-1) * 50) + "px;' data-id='" + reply.no + "'></div>");
 			var removeReplyDiv = $("<div><h3>[이 댓글은 삭제된 댓글입니다!]</h3></div>");
 			
 			if ( reply.body == "removedReply" ) {
 				replyDiv.append(removeReplyDiv);
-			}
-			else {
+			} else {
 				var nickname = reply.memberVO.nickname + "(" + reply.memberVO.id + ")";
 				var top = $("<span class='writer' data-id='" + reply.level + "'>"
 							+ "<img src='<c:url value='/profile/" + reply.memberNo + "'/>' width='30px' height='40px'/>"
@@ -149,11 +146,8 @@
 				if ( loginMemberNo == replyMemberNo ) {
 					replyDiv.append(removeReply);
 				}
-				
 			}
-			
 			$("#replies").append(replyDiv);
-			
 		}
 		
 		$("#removeBtn").click(function() {

@@ -18,6 +18,9 @@
 	<!-- Whole Wrapper -->
 	<div style="width: 1000px;">
 		<jsp:include page="/WEB-INF/view/template/menu.jsp"/>
+		<div>
+			전체 게시물 개수 : ${pageExplorer.totalCount}
+		</div>
 
 		<!-- List Wrapper -->
 		<div>
@@ -32,7 +35,7 @@
 						<th>조회수</th>
 						<th>추천수</th>
 					</tr>
-					<c:forEach items="${communityList}" var="community">
+					<c:forEach items="${pageExplorer.list}" var="community">
 						<tr>
 							<td>${community.no}</td>
 							<td><a href="<c:url value="/read/${community.no}"/>">${community.title}</a></td>
@@ -52,12 +55,15 @@
 							<td>${community.recommendCount}</td>
 						</tr>
 					</c:forEach>
-					<c:if test="${empty communityList}">
+					<c:if test="${empty pageExplorer.list}">
 						<tr>
 							<td colspan="5">등록된 게시글이 없습니다.</td>
 						</tr>
 					</c:if>
 				</table>
+				<form id="searchForm">
+					${pageExplorer.make()}
+				</form>
 			</div>
 
 		</div>

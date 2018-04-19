@@ -9,6 +9,7 @@
 		<typeAlias type="com.lsg.member.vo.MemberVO" alias="MemberVO"/>
 		<typeAlias type="com.lsg.community.vo.CommunityVO" alias="CommunityVO"/>
 		<typeAlias type="com.lsg.reply.vo.ReplyVO" alias="ReplyVO"/>
+		<typeAlias type="com.lsg.community.vo.CommunityPagerVO" alias="CommunityPagerVO"/>
 	</typeAliases>
 
 	<mappers>

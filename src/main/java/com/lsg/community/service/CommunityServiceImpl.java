@@ -1,9 +1,13 @@
 package com.lsg.community.service;
 
-import java.util.List;
-
 import com.lsg.community.dao.CommunityDao;
+import com.lsg.community.vo.CommunityPagerVO;
 import com.lsg.community.vo.CommunityVO;
+
+import io.github.seccoding.web.pager.Pager;
+import io.github.seccoding.web.pager.PagerFactory;
+import io.github.seccoding.web.pager.explorer.ClassicPageExplorer;
+import io.github.seccoding.web.pager.explorer.PageExplorer;
 
 public class CommunityServiceImpl implements CommunityService {
 
@@ -14,8 +18,15 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	@Override
-	public List<CommunityVO> getAllCommunities() {
-		return communityDao.selectAllCommunities();
+	public PageExplorer getAllCommunities(CommunityPagerVO communityPagerVO) {
+		
+		Pager pager = PagerFactory.getPager(Pager.ORACLE,
+											communityPagerVO.getPageNo() + "",
+											communityDao.selectAllCommunityCount(communityPagerVO));
+		PageExplorer pageExplorer = pager.makePageExplorer(ClassicPageExplorer.class, communityPagerVO);
+		pageExplorer.setList(communityDao.selectAllCommunities(communityPagerVO));
+		
+		return pageExplorer;
 	}
 
 	@Override

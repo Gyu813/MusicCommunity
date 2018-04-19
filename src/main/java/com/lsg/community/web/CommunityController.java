@@ -2,7 +2,6 @@ package com.lsg.community.web;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,14 +14,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.multipart.support.RequestPartServletServerHttpRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.lsg.community.service.CommunityService;
+import com.lsg.community.vo.CommunityPagerVO;
 import com.lsg.community.vo.CommunityVO;
 import com.lsg.member.constants.Member;
 import com.lsg.member.vo.MemberVO;
 import com.lsg.util.DownloadUtil;
+
+import io.github.seccoding.web.pager.explorer.PageExplorer;
 
 @Controller
 public class CommunityController {
@@ -34,13 +35,26 @@ public class CommunityController {
 	}
 
 	@RequestMapping("/")
-	public ModelAndView viewMainPage(HttpSession session) {
+	public ModelAndView viewMainPage(CommunityPagerVO communityPagerVO, HttpSession session) {
+		
+		// main.jsp에 처음 접근했을 때
+		if ( communityPagerVO.getPageNo() < 0 ) {
+			// Session에 저장된 CommunityPagerVO를 가져옴
+			communityPagerVO = (CommunityPagerVO) session.getAttribute("__PAGER__");
+			// Session에 저장된 CommunityPagerVO가 없을 경우, PageNo = 0
+			if ( communityPagerVO == null ) {
+				communityPagerVO = new CommunityPagerVO();
+				communityPagerVO.setPageNo(0);
+			}
+		}
+		
+		session.setAttribute("__PAGER__", communityPagerVO);
 		
 		ModelAndView view = new ModelAndView();
 		view.setViewName("community/main");
 		
-		List<CommunityVO> communityList = communityService.getAllCommunities();
-		view.addObject("communityList", communityList);
+		PageExplorer pageExplorer = communityService.getAllCommunities(communityPagerVO);
+		view.addObject("pageExplorer", pageExplorer);
 		
 		return view;
 	}

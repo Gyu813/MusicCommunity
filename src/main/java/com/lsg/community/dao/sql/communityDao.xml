@@ -27,31 +27,40 @@
 		</association>
 	</resultMap>
 
-	<select id="selectAllCommunities" resultMap="CommunityVOMap">
-		SELECT	C.NO
-				, C.MEMBER_NO
-				, C.TITLE
-				, C.BODY
-				, (CASE
-					 WHEN C.WRITE_DATE > SYSDATE - 1 
-					 	THEN SUBSTR(TO_CHAR(C.WRITE_DATE, 'YYYY.MM.DD HH24:MI:SS'), 12, 5)
-           			 WHEN C.WRITE_DATE > ADD_MONTHS(SYSDATE, -1) 
-           			 	THEN SUBSTR(TO_CHAR(C.WRITE_DATE, 'YYYY.MM.DD HH24:MI:SS'), 6, 5)
-            		 ELSE 
-            		 	SUBSTR(TO_CHAR(C.WRITE_DATE, 'YYYY.MM.DD HH24:MI:SS'), 1, 10)
-				END) WRITE_DATE
-				, C.VIEW_COUNT
-				, C.RECOMMEND_COUNT
-				, C.REQUEST_IP
-				, C.DISPLAY_FILE_NAME
-				, M.NO M_NO
-				, M.ID
-				, M.NICKNAME
-				, M.PROFILE_FILE_NAME
-		FROM	COMMUNITY C
-				, MEMBER M
-		WHERE	C.MEMBER_NO = M.NO(+)
-		ORDER	BY C.NO DESC
+	<select id="selectAllCommunities" parameterType="CommunityPagerVO" resultMap="CommunityVOMap">
+		SELECT	*
+		FROM	(
+					SELECT	ROWNUM RNUM
+							, C.*
+					FROM	(
+								SELECT	C.NO
+										, C.MEMBER_NO
+										, C.TITLE
+										, C.BODY
+										, (CASE
+											 WHEN C.WRITE_DATE > SYSDATE - 1
+											 	THEN SUBSTR(TO_CHAR(C.WRITE_DATE, 'YYYY.MM.DD HH24:MI:SS'), 12, 5)
+						           			 WHEN C.WRITE_DATE > ADD_MONTHS(SYSDATE, -1) 
+						           			 	THEN SUBSTR(TO_CHAR(C.WRITE_DATE, 'YYYY.MM.DD HH24:MI:SS'), 6, 5)
+						            		 ELSE 
+						            		 	SUBSTR(TO_CHAR(C.WRITE_DATE, 'YYYY.MM.DD HH24:MI:SS'), 1, 10)
+										END) WRITE_DATE
+										, C.VIEW_COUNT
+										, C.RECOMMEND_COUNT
+										, C.REQUEST_IP
+										, C.DISPLAY_FILE_NAME
+										, M.NO M_NO
+										, M.ID
+										, M.NICKNAME
+										, M.PROFILE_FILE_NAME
+								FROM	COMMUNITY C
+										, MEMBER M
+								WHERE	C.MEMBER_NO = M.NO(+)
+								ORDER	BY C.NO DESC
+							) C
+					WHERE	ROWNUM <![CDATA[ <= ]]> #{endNumber}
+				)
+		WHERE	RNUM >= #{startNumber}
 	</select>
 	
 	<select id="selectOneCommunity" parameterType="_int" resultMap="CommunityVOMap">
@@ -146,5 +155,12 @@
 		DELETE	FROM	COMMUNITY
 		WHERE			MEMBER_NO = #{memberNo}
 	</delete>
+	
+	<select id="selectAllCommunityCount" parameterType="CommunityPagerVO" resultType="_int">
+		SELECT	COUNT(C.NO)
+		FROM	COMMUNITY C
+				, MEMBER M
+		WHERE	C.MEMBER_NO = M.NO(+)
+	</select>
 
 </mapper>

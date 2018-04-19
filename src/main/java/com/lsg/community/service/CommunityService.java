@@ -1,12 +1,13 @@
 package com.lsg.community.service;
 
-import java.util.List;
-
+import com.lsg.community.vo.CommunityPagerVO;
 import com.lsg.community.vo.CommunityVO;
+
+import io.github.seccoding.web.pager.explorer.PageExplorer;
 
 public interface CommunityService {
 	
-	public List<CommunityVO> getAllCommunities();
+	public PageExplorer getAllCommunities(CommunityPagerVO communityPagerVO);
 	
 	public CommunityVO getOneCommunity(int no);
 	

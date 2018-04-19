@@ -4,13 +4,14 @@ import java.util.List;
 
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
+import com.lsg.community.vo.CommunityPagerVO;
 import com.lsg.community.vo.CommunityVO;
 
 public class CommunityDaoImplForOracle extends SqlSessionDaoSupport implements CommunityDao {
 
 	@Override
-	public List<CommunityVO> selectAllCommunities() {
-		return getSqlSession().selectList("CommunityDao.selectAllCommunities");
+	public List<CommunityVO> selectAllCommunities(CommunityPagerVO communityPagerVO) {
+		return getSqlSession().selectList("CommunityDao.selectAllCommunities", communityPagerVO);
 	}
 
 	@Override
@@ -46,6 +47,11 @@ public class CommunityDaoImplForOracle extends SqlSessionDaoSupport implements C
 	@Override
 	public int deleteMyCommunities(int memberNo) {
 		return getSqlSession().delete("CommunityDao.deleteMyCommunities", memberNo);
+	}
+
+	@Override
+	public int selectAllCommunityCount(CommunityPagerVO communityPagerVO) {
+		return getSqlSession().selectOne("CommunityDao.selectAllCommunityCount", communityPagerVO);
 	}
 
 }
