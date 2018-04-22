@@ -168,4 +168,9 @@
 		DELETE	FROM	REPLY
 		WHERE			MEMBER_NO = #{memberNo}
 	</delete>
+	
+	<delete id="deleteReplyByCommunityNo" parameterType="_int">
+		DELETE	FROM	REPLY
+		WHERE			COMMUNITY_NO = #{communityNo}
+	</delete>
 </mapper>

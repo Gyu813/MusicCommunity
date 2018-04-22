@@ -3,6 +3,7 @@ package com.lsg.community.service;
 import com.lsg.community.dao.CommunityDao;
 import com.lsg.community.vo.CommunityPagerVO;
 import com.lsg.community.vo.CommunityVO;
+import com.lsg.reply.dao.ReplyDao;
 
 import io.github.seccoding.web.pager.Pager;
 import io.github.seccoding.web.pager.PagerFactory;
@@ -12,9 +13,14 @@ import io.github.seccoding.web.pager.explorer.PageExplorer;
 public class CommunityServiceImpl implements CommunityService {
 
 	private CommunityDao communityDao;
+	private ReplyDao replyDao;
 
 	public void setCommunityDao(CommunityDao communityDao) {
 		this.communityDao = communityDao;
+	}
+
+	public void setReplyDao(ReplyDao replyDao) {
+		this.replyDao = replyDao;
 	}
 
 	@Override
@@ -62,6 +68,7 @@ public class CommunityServiceImpl implements CommunityService {
 
 	@Override
 	public boolean removeCommunity(int no) {
+		replyDao.deleteReplyByCommunityNo(no);
 		return communityDao.deleteCommunity(no) > 0;
 	}
 	

@@ -10,7 +10,8 @@
 	
 	<bean	id="communityService"
 			class="com.lsg.community.service.CommunityServiceImpl">
-		<property name="communityDao" ref="communityDao"/>		
+		<property name="communityDao" ref="communityDao"/>	
+		<property name="replyDao" ref="replyDao"/>	
 	</bean>
 
 </beans>

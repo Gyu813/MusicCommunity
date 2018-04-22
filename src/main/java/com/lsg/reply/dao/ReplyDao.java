@@ -21,5 +21,7 @@ public interface ReplyDao {
 	public int updateReplyLevelOneBody(int replyNo);
 	
 	public int deleteReplyByMemberNo(int memberNo);
+	
+	public int deleteReplyByCommunityNo(int communityNo);
 
 }

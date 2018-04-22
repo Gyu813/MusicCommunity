@@ -50,4 +50,9 @@ public class ReplyDaoImplForOracle extends SqlSessionDaoSupport implements Reply
 		return getSqlSession().delete("ReplyDao.deleteReplyByMemberNo", memberNo);
 	}
 
+	@Override
+	public int deleteReplyByCommunityNo(int communityNo) {
+		return getSqlSession().delete("ReplyDao.deleteReplyByCommunityNo", communityNo);
+	}
+
 }
