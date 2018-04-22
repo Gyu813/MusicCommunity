@@ -39,14 +39,14 @@
 				, R.MEMBER_NO R_MEMBER_NO
 				, R.COMMUNITY_NO
 				, R.BODY R_BODY
-				, (CASE
-					 WHEN R.REGIST_DATE > SYSDATE - 1 
-					 	THEN SUBSTR(TO_CHAR(R.REGIST_DATE, 'YYYY.MM.DD HH24:MI:SS'), 12, 5)
-           			 WHEN R.REGIST_DATE > ADD_MONTHS(SYSDATE, -1) 
-           			 	THEN SUBSTR(TO_CHAR(R.REGIST_DATE, 'YYYY.MM.DD HH24:MI:SS'), 6, 5)
-            		 ELSE 
-            		 	SUBSTR(TO_CHAR(R.REGIST_DATE, 'YYYY.MM.DD HH24:MI:SS'), 1, 10)
-				END) R_REGIST_DATE
+				, (CASE 
+					 WHEN	TO_CHAR(SYSDATE,'yyyymmdd') - TO_CHAR((R.REGIST_DATE),'yyyymmdd') = 0 
+                        THEN   TO_CHAR(R.REGIST_DATE,'hh24:ss')
+                     WHEN	TO_CHAR(SYSDATE,'yyyymmdd') - TO_CHAR((R.REGIST_DATE),'yyyymmdd') >= 10000 
+                        THEN   TO_CHAR(R.REGIST_DATE,'YY-MM-DD')
+                     ELSE
+                        TO_CHAR(R.REGIST_DATE,'MM-DD')
+                END) R_REGIST_DATE
 				, R.PARENT_REPLY_NO
 				, R.LOVE_COUNT
 				, R.HATE_COUNT
@@ -80,14 +80,14 @@
 				, R.MEMBER_NO R_MEMBER_NO
 				, R.COMMUNITY_NO
 				, R.BODY R_BODY
-				, (CASE
-					 WHEN R.REGIST_DATE > SYSDATE - 1 
-					 	THEN SUBSTR(TO_CHAR(R.REGIST_DATE, 'YYYY.MM.DD HH24:MI:SS'), 12, 5)
-           			 WHEN R.REGIST_DATE > ADD_MONTHS(SYSDATE, -1) 
-           			 	THEN SUBSTR(TO_CHAR(R.REGIST_DATE, 'YYYY.MM.DD HH24:MI:SS'), 6, 5)
-            		 ELSE 
-            		 	SUBSTR(TO_CHAR(R.REGIST_DATE, 'YYYY.MM.DD HH24:MI:SS'), 1, 10)
-				END) R_REGIST_DATE
+				, (CASE 
+					 WHEN	TO_CHAR(SYSDATE,'yyyymmdd') - TO_CHAR((R.REGIST_DATE),'yyyymmdd') = 0 
+                        THEN   TO_CHAR(R.REGIST_DATE,'hh24:ss')
+                     WHEN	TO_CHAR(SYSDATE,'yyyymmdd') - TO_CHAR((R.REGIST_DATE),'yyyymmdd') >= 10000 
+                        THEN   TO_CHAR(R.REGIST_DATE,'YY-MM-DD')
+                     ELSE
+                        TO_CHAR(R.REGIST_DATE,'MM-DD')
+                END) R_REGIST_DATE
 				, R.PARENT_REPLY_NO
 				, R.LOVE_COUNT
 				, R.HATE_COUNT
