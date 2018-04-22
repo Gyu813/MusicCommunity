@@ -75,7 +75,7 @@ public class MemberController {
 		if ( errors.hasErrors() ) {
 			return "member/join";
 		}
-		
+
 		memberVO.save();
 		
 		boolean isSuccess = memberService.createMember(memberVO);
@@ -149,8 +149,10 @@ public class MemberController {
 		
 		if ( memberVO.getProfileFilename().length() > 0 ) {
 			// 프로필을 바꾸었을 때,
-			File file = new File("D:/uploadProfiles/" + loginMember.getProfileFilename());
-			file.delete();
+			if ( !loginMember.getProfileFilename().equals("default.png") ) {
+				File file = new File("D:/uploadProfiles/" + loginMember.getProfileFilename());
+				file.delete();
+			}
 		} else {
 			// 첨부파일을 바꾸지 않았을 때,
 			updateMember.setProfileFilename(loginMember.getProfileFilename());

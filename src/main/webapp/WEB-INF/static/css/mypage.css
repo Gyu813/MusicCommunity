@@ -1,0 +1,33 @@
+@charset "UTF-8";
+
+body {
+	background: url(http://i.imgur.com/GHr12sH.jpg) no-repeat center center fixed;
+	-webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+	padding-top:50px;	
+}
+
+.container {
+	margin-top: -30px;
+}
+
+form[role=modify] {
+	color: #5d5d5d;
+	background: #f2f2f2;
+	padding: 26px;
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+}
+
+form[role=modify] input,
+form[role=modify] button {
+	font-size: 18px;
+	margin: 10px 0;
+}
+
+form[role=modify] > legend {
+	margin-top: -20px;
+}

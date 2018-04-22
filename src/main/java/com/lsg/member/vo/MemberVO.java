@@ -117,7 +117,6 @@ public class MemberVO {
 	}
 
 	public String save() {
-		
 		if ( profileFile != null && !profileFile.isEmpty() ) {
 			profileFilename = profileFile.getOriginalFilename();
 			
@@ -130,9 +129,19 @@ public class MemberVO {
 			} catch (IOException ioe) {
 				throw new RuntimeException(ioe.getMessage(), ioe);
 			}
+		} else {
+			profileFilename = "default.png";
+			File newFile = new File("D:/uploadProfiles/default");
+			try {
+				profileFile.transferTo(newFile);
+				return newFile.getAbsolutePath();
+			} catch (IllegalStateException ise) {
+				throw new RuntimeException(ise.getMessage(), ise);
+			} catch (IOException ioe) {
+				throw new RuntimeException(ioe.getMessage(), ioe);
+			}
 		}
-		
-		return null;
+
 	}
 	
 }

@@ -7,6 +7,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Join Page</title>
+<link rel="stylesheet" type="text/css" href="<c:url value="/static/css/join.css"/>"/>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="<c:url value="/static/js/jquery-3.3.1.min.js"/>"></script>
 <script type="text/javascript">
 	$().ready(function() {
@@ -79,47 +82,55 @@
 </head>
 <body>
 	<!-- Whole Wrapper -->
-	<div>
-		<jsp:include page="/WEB-INF/view/template/menu.jsp"/>
-		<form:form modelAttribute="joinForm" enctype="multipart/form-data">
-		
-			<div style="display: inline-block;">	
-				<div>
-					아이디 <input type="text" id="id" name="id" placeholder="아이디를 입력하세요." value="${joinForm.id}"/>
-					<form:errors path="id"/>
-				</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
+				<section class="join-form">
+					<form:form modelAttribute="joinForm" enctype="multipart/form-data" class="form" role="join">
+						<legend><h1>회원가입 ♬</h1></legend>
+						<div class="row">
+							<div class="col-xs-6 col-md-6" style="display: inline-block;">	
+									아이디 <input type="text" class="form-control" id="id" name="id" placeholder="아이디를 입력하세요." value="${joinForm.id}"/>
+									<form:errors path="id"/>
+							</div>
+							
+							<div class="col-xs-6 col-md-6" style="display: inline-block;">
+								<input type="button" class="btn btn-lg btn-primary btn-block" id="dupliConfirmBtn" name="dupliConfirmBtn" value="중복확인"/>
+							</div>
+						</div>
+						
+						<div>
+							비밀번호<input type="password" class="form-control" id="password" name="password" placeholder="비밀번호를 입력하세요." value="${joinForm.password}"/>
+							<form:errors path="password"/>
+						</div>
+						
+						<div>
+							비밀번호 확인<input type="password" class="form-control" id="passwordConfirm" placeholder="비밀번호를 다시 입력하세요."/>
+						</div>
+						
+						<div>
+							닉네임<input type="text" class="form-control" id="nickname" name="nickname" placeholder="닉네임을 입력하세요." value="${joinForm.nickname}"/>
+							<form:errors path="nickname"/>
+						</div>
+						
+						<div>
+							자기소개 <textarea name="selfIntroduction" class="form-control" rows="10" cols="35"></textarea>
+						</div>
+						<br/>
+						<div>
+							프로필<input type="file" id="profileFile" name="profileFile"/>
+						</div>
+						
+						<div>
+							<input class="btn btn-lg btn-primary btn-block" type="button" id="joinBtn" value="가입하기"/>
+						</div>
+						<div class="bottom-menu">
+           					<a href="<c:url value="/"/>">메인으로</a> or <a href="<c:url value="/login"/>">로그인</a>
+          				</div>
+					</form:form>
+				</section>
 			</div>
-			
-			<div style="display: inline-block;">
-				<input type="button" id="dupliConfirmBtn" name="dupliConfirmBtn" value="중복확인"/>
-			</div>
-			
-			<div>
-				비밀번호<input type="password" id="password" name="password" placeholder="비밀번호를 입력하세요." value="${joinForm.password}"/>
-				<form:errors path="password"/>
-			</div>
-			
-			<div>
-				비밀번호 확인<input type="password" id="passwordConfirm" placeholder="비밀번호를 다시 입력하세요."/>
-			</div>
-			
-			<div>
-				닉네임<input type="text" id="nickname" name="nickname" placeholder="닉네임을 입력하세요." value="${joinForm.nickname}"/>
-				<form:errors path="nickname"/>
-			</div>
-			
-			<div>
-				자기소개 <textarea name="selfIntroduction" rows="10" cols="35"></textarea>
-			</div>
-			
-			<div>
-				프로필<input type="file" id="profileFile" name="profileFile"/>
-			</div>
-			
-			<div>
-				<input type="button" id="joinBtn" value="가입하기"/>
-			</div>
-		</form:form>
+		</div>
 	</div>
 
 </body>

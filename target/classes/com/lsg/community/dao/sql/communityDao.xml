@@ -37,14 +37,14 @@
 										, C.MEMBER_NO
 										, C.TITLE
 										, C.BODY
-										, (CASE
-											 WHEN C.WRITE_DATE > SYSDATE - 1
-											 	THEN SUBSTR(TO_CHAR(C.WRITE_DATE, 'YYYY.MM.DD HH24:MI:SS'), 12, 5)
-						           			 WHEN C.WRITE_DATE > ADD_MONTHS(SYSDATE, -1) 
-						           			 	THEN SUBSTR(TO_CHAR(C.WRITE_DATE, 'YYYY.MM.DD HH24:MI:SS'), 6, 5)
-						            		 ELSE 
-						            		 	SUBSTR(TO_CHAR(C.WRITE_DATE, 'YYYY.MM.DD HH24:MI:SS'), 1, 10)
-										END) WRITE_DATE
+										, (CASE 
+												WHEN	TO_CHAR(SYSDATE,'yyyymmdd') - TO_CHAR((C.WRITE_DATE),'yyyymmdd') = 0 
+                            						THEN   TO_CHAR(WRITE_DATE,'hh24:ss')
+                        						WHEN	TO_CHAR(SYSDATE,'yyyymmdd') - TO_CHAR((C.WRITE_DATE),'yyyymmdd') >= 10000 
+                            						THEN   TO_CHAR(WRITE_DATE,'YY-MM-DD')
+                        						ELSE
+                            						TO_CHAR(WRITE_DATE,'MM-DD')
+                						END) WRITE_DATE
 										, C.VIEW_COUNT
 										, C.RECOMMEND_COUNT
 										, C.REQUEST_IP
@@ -68,14 +68,14 @@
 				, C.MEMBER_NO
 				, C.TITLE
 				, C.BODY
-				, (CASE
-					 WHEN C.WRITE_DATE > SYSDATE - 1 
-					 	THEN SUBSTR(TO_CHAR(C.WRITE_DATE, 'YYYY.MM.DD HH24:MI:SS'), 12, 5)
-           			 WHEN C.WRITE_DATE > ADD_MONTHS(SYSDATE, -1) 
-           			 	THEN SUBSTR(TO_CHAR(C.WRITE_DATE, 'YYYY.MM.DD HH24:MI:SS'), 6, 5)
-            		 ELSE 
-            		 	TO_CHAR(C.WRITE_DATE, 'YYYY.MM.DD')
-				END) WRITE_DATE
+				, (CASE 
+                        WHEN	TO_CHAR(SYSDATE,'yyyymmdd') - TO_CHAR((C.WRITE_DATE),'yyyymmdd') = 0 
+                            THEN   TO_CHAR(WRITE_DATE,'hh24:ss')
+                        WHEN	TO_CHAR(SYSDATE,'yyyymmdd') - TO_CHAR((C.WRITE_DATE),'yyyymmdd') >= 10000 
+                            THEN   TO_CHAR(WRITE_DATE,'YY-MM-DD')
+                        ELSE
+                            TO_CHAR(WRITE_DATE,'MM-DD')
+                END) WRITE_DATE
 				, C.VIEW_COUNT
 				, C.RECOMMEND_COUNT
 				, C.REQUEST_IP

@@ -6,6 +6,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Detail Page</title>
+<link rel="stylesheet" type="text/css" href="<c:url value="/static/css/bootstrap.css"/>"/>
+<link rel="stylesheet" type="text/css" href="<c:url value="/static/css/bootstrap.min.css"/>"/>
+<link rel="stylesheet" type="text/css" href="<c:url value="/static/css/detail.css"/>"/>
 <script type="text/javascript" src="<c:url value="/static/js/jquery-3.3.1.min.js"/>"></script>
 <script type="text/javascript">
 	$().ready(function() {
@@ -150,6 +153,14 @@
 			$("#replies").append(replyDiv);
 		}
 		
+		$("#goBackBtn").click(function() {
+			$(location).attr("href", "<c:url value="/"/>");
+		});
+		
+		$("#recommendBtn").click(function() {
+			$(location).attr("href", "<c:url value="/recommend/${community.no}"/>");
+		});
+		
 		$("#removeBtn").click(function() {
 			var result = confirm("정말 삭제하시겠습니까?");
 			if ( result ) { // result가 true일 경우
@@ -165,55 +176,59 @@
 </head>
 <body>
 	<!-- Whole Wrapper -->
-	<div>
-		<jsp:include page="/WEB-INF/view/template/menu.jsp"/>
-		
-		<h1>${community.title}</h1>
-		<c:choose>
-			<c:when test="${not empty community.memberVO}">
-				<h3>${community.memberVO.id}(${community.memberVO.nickname}) | ${community.requestIp}</h3>
-			</c:when>
-			<c:otherwise>
-				<h3>탈퇴한 회원 | ${community.requestIp}</h3>
-			</c:otherwise>
-		</c:choose>
-		<p>${community.viewCount} | ${community.recommendCount} | ${community.writeDate}</p>
-		<hr/>
-		<p>${community.body}</p>
-		
-		<c:if test="${not empty community.displayFilename}">
-			<p>파일 : ${community.displayFilename}</p>
+	<div class="container">
+		<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
+			<jsp:include page="/WEB-INF/view/template/menu.jsp"/>
 			
-			<video controls>
-				<source src="<c:url value="/play/${community.no}"/>" type="video/mp4">
-			</video>
-		</c:if>
-		
-		<hr/>
-		
-		<div id="replies"></div>
-		<div id="createReplyDiv">
-			<div id="createReply">
-				<form id="writeReplyForm">
-					<input type="hidden" id="parentReplyNo" name="parentReplyNo" value="0"/>
-					<div>
-						<textarea rows="5" cols="40" id="body" name="body"></textarea>
-					</div>
+			<div class="datail-div">
+				<h1>${community.title}</h1>
+				<c:choose>
+					<c:when test="${not empty community.memberVO}">
+						<h4>${community.memberVO.id}(${community.memberVO.nickname}) [IP]${community.requestIp}</h4>
+					</c:when>
+					<c:otherwise>
+						<h3>탈퇴한 회원 | ${community.requestIp}</h3>
+					</c:otherwise>
+				</c:choose>
+				<p>[조회수]${community.viewCount} [추천수]${community.recommendCount} [작성일]${community.writeDate}</p>
+				<hr/>
+				<p>${community.body}</p>
+				
+				<c:if test="${not empty community.displayFilename}">
+					<p>파일 : ${community.displayFilename}</p>
 					
-					<input type="button" id="writeReplyBtn" value="댓글등록"/>
-				</form>
+					<video width="490" controls>
+						<source src="<c:url value="/play/${community.no}"/>" type="video/mp4">
+					</video>
+				</c:if>
+				
+				<hr/>
+				
+				<div id="replies"></div>
+				<div id="createReplyDiv">
+					<div id="createReply">
+						<form id="writeReplyForm">
+							<input type="hidden" id="parentReplyNo" name="parentReplyNo" value="0"/>
+							<div>
+								<textarea class="form-control" rows="5" cols="40" id="body" name="body"></textarea>
+							</div>
+							
+							<input type="button" id="writeReplyBtn" value="댓글등록"/>
+						</form>
+					</div>
+				</div>
+				
+				<hr/>
+				
+				<div>
+					<input type="button" id="goBackBtn" value="뒤로가기"/>
+					<input type="button" id="recommendBtn" value="추천하기"/>
+					<c:if test="${community.memberVO.no == sessionScope.__USER__.no}">
+						<input type="button" id="modifyBtn" value="글 수정"/>
+						<input type="button" id="removeBtn" value="글 삭제"/>
+					</c:if>
+				</div>
 			</div>
-		</div>
-		
-		<hr/>
-		
-		<div>
-			<a href="<c:url value="/"/>">뒤로가기</a>
-			<a href="<c:url value="/recommend/${community.no}"/>">추천하기</a>
-			<c:if test="${community.memberVO.no == sessionScope.__USER__.no}">
-				<input type="button" id="modifyBtn" value="글 수정"/>
-				<input type="button" id="removeBtn" value="글 삭제"/>
-			</c:if>
 		</div>
 	</div>
 </body>

@@ -36,6 +36,12 @@ public class CommunityServiceImpl implements CommunityService {
 
 	@Override
 	public boolean createCommunity(CommunityVO communityVO) {
+		
+		String body = communityVO.getBody();
+
+		body = body.replace("\n", "<br/>");
+		communityVO.setBody(body);
+		
 		return communityDao.insertCommunity(communityVO) > 0;
 	}
 

@@ -123,7 +123,6 @@ public class CommunityVO {
 	}
 	
 	public String save() {
-		
 		if ( file != null && !file.isEmpty() ) {
 			displayFilename = file.getOriginalFilename();
 			

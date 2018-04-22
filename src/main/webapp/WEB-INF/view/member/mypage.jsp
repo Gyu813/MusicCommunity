@@ -7,6 +7,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>MyPage</title>
+<link rel="stylesheet" type="text/css" href="<c:url value="/static/css/bootstrap.css"/>"/>
+<link rel="stylesheet" type="text/css" href="<c:url value="/static/css/bootstrap.min.css"/>"/>
+<link rel="stylesheet" type="text/css" href="<c:url value="/static/css/mypage.css"/>"/>
 <script type="text/javascript" src="<c:url value="/static/js/jquery-3.3.1.min.js"/>"></script>
 <script type="text/javascript">
 	$().ready(function() {
@@ -52,52 +55,58 @@
 </script>
 </head>
 <body>
-	<div>
-		<jsp:include page="/WEB-INF/view/template/menu.jsp"/>
-		
-		<h1>당신은 우리의 ${member.no}번째 회원이십니다!</h1>
-		<h3>가입날짜 : ${member.registDate}</h3>
-		
-		<form:form modelAttribute="modifyForm" enctype="multipart/form-data">
-			<div>
-				<img src="<c:url value="/profile/${member.no}"/>" width="150px" height="200px"/>
-			</div>
+	<div class="container">
+		<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
+			<jsp:include page="/WEB-INF/view/template/menu.jsp"/>
 			
-			<c:if test="${not empty member.profileFilename}">
-				프로필을 바꾸시겠습니까?
-				<div class="modifyProfile">
+			<section class="write-form">
+				<form:form modelAttribute="modifyForm" enctype="multipart/form-data" class="form" role="modify">
+					<legend>
+						<h3>당신은 우리의 ${member.no}번째 회원이십니다!</h3>
+						<h4>가입날짜 : ${member.registDate}</h4>
+					</legend>
+					
 					<div>
-						<label><input type="radio" id="yesChange" name="changeProfile" value="Y"/>네</label>
+						<img src="<c:url value="/profile/${member.no}"/>" width="150px" height="200px"/>
 					</div>
+					
+					<c:if test="${not empty member.profileFilename}">
+						프로필을 바꾸시겠습니까?
+						<div class="modifyProfile">
+							<div>
+								<label><input type="radio" id="yesChange" name="changeProfile" value="Y"/>네</label>
+							</div>
+							<div>
+								<label><input type="radio" id="noChange" name="changeProfile" value="N" checked="checked"/>아니오</label>
+							</div>
+							현재파일 : ${member.profileFilename}
+						</div>
+					</c:if>
+					
 					<div>
-						<label><input type="radio" id="noChange" name="changeProfile" value="N" checked="checked"/>아니오</label>
+						<input type="file" id="profileFile" name="profileFile"/>
 					</div>
-					현재파일 : ${member.profileFilename}
-				</div>
-			</c:if>
-			
+					
+					<div>
+						아이디 : ${member.id}
+					</div>
+					
+					<div>
+						닉네임 : <input type="text" class="form-control" id="nickname" name="nickname" value="${member.nickname}"/>
+					</div>
+					
+					<div>
+						자기소개 : <textarea name="selfIntroduction" class="form-control" rows="10" cols="35">${member.selfIntroduction}</textarea>
+					</div>
+					
+					<div>
+						<input type="button" class="btn btn-lg btn-primary btn-block" id="modifyBtn" value="수정하기"/>
+					</div>
+				</form:form>
+			</section>
 			<div>
-				<input type="file" id="profileFile" name="profileFile"/>
+				<input type="button" id="dropBtn" value="회원탈퇴하기"/>
 			</div>
-			
-			<div>
-				아이디 : ${member.id}
-			</div>
-			
-			<div>
-				닉네임 : <input type="text" id="nickname" name="nickname" value="${member.nickname}"/>
-			</div>
-			
-			<div>
-				자기소개 : <textarea name="selfIntroduction" rows="10" cols="35">${member.selfIntroduction}</textarea>
-			</div>
-			
-			<div>
-				<input type="button" id="modifyBtn" value="수정하기"/>
-			</div>
-		</form:form>
-		<div>
-			<input type="button" id="dropBtn" value="회원탈퇴하기"/>
 		</div>
 	</div>
 </body>
