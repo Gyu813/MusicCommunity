@@ -3,12 +3,14 @@ package com.lsg.member.service;
 import com.lsg.community.dao.CommunityDao;
 import com.lsg.member.dao.MemberDao;
 import com.lsg.member.vo.MemberVO;
+import com.lsg.reply.dao.ReplyDao;
 import com.lsg.util.SHA256Util;
 
 public class MemberServiceImpl implements MemberService {
 	
 	private MemberDao memberDao;
 	private CommunityDao communityDao;
+	private ReplyDao replyDao;
 
 	public void setMemberDao(MemberDao memberDao) {
 		this.memberDao = memberDao;
@@ -16,6 +18,10 @@ public class MemberServiceImpl implements MemberService {
 
 	public void setCommunityDao(CommunityDao communityDao) {
 		this.communityDao = communityDao;
+	}
+	
+	public void setReplyDao(ReplyDao replyDao) {
+		this.replyDao = replyDao;
 	}
 
 	@Override
@@ -62,6 +68,7 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public boolean dropMember(int no) {
 		communityDao.deleteMyCommunities(no);
+		replyDao.deleteReplyByMemberNo(no);
 		return memberDao.deleteMember(no) > 0;
 	}
 

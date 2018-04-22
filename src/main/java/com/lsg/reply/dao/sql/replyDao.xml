@@ -163,4 +163,9 @@
 		SET		BODY = 'removedReply'
 		WHERE	NO = #{no}
 	</update>
+	
+	<delete id="deleteReplyByMemberNo" parameterType="_int">
+		DELETE	FROM	REPLY
+		WHERE			MEMBER_NO = #{memberNo}
+	</delete>
 </mapper>

@@ -17,7 +17,9 @@ public interface ReplyDao {
 	public int increaseHateCount(int replyNo);
 	
 	public int deleteReply(int replyNo);
-	
+
 	public int updateReplyLevelOneBody(int replyNo);
+	
+	public int deleteReplyByMemberNo(int memberNo);
 
 }
